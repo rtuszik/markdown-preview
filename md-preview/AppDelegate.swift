@@ -4,7 +4,6 @@
 //
 
 import Cocoa
-import Sparkle
 import UniformTypeIdentifiers
 
 private enum CommandLineToolInstallError: LocalizedError {
@@ -77,14 +76,6 @@ private enum AppAppearanceMode: String, CaseIterable {
 @main
 final class AppDelegate: NSObject, NSApplicationDelegate {
 
-    @IBOutlet private weak var checkForUpdatesMenuItem: NSMenuItem?
-
-    private let updaterController = SPUStandardUpdaterController(
-        startingUpdater: true,
-        updaterDelegate: nil,
-        userDriverDelegate: nil
-    )
-
     private weak var hideSidebarMenuItem: NSMenuItem?
     private weak var outlineMenuItem: NSMenuItem?
     private weak var filesMenuItem: NSMenuItem?
@@ -149,10 +140,6 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationSupportsSecureRestorableState(_ app: NSApplication) -> Bool {
         true
-    }
-
-    @IBAction func checkForUpdates(_ sender: Any?) {
-        updaterController.updater.checkForUpdates()
     }
 
     @objc private func installCommandLineTools(_ sender: Any?) {
@@ -310,9 +297,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         #!/bin/sh
         # Managed by Markdown Preview CLI
         if [ "$#" -eq 0 ]; then
-          exec open -b "doc.md-preview" .
+          exec open -b "io.tuszik.md-preview" .
         else
-          exec open -b "doc.md-preview" "$@"
+          exec open -b "io.tuszik.md-preview" "$@"
         fi
         """
 
@@ -405,7 +392,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
           if grep -q '^# Managed by Markdown Preview CLI$' "$path"; then
             return 0
           fi
-          grep -q 'exec open -b "doc.md-preview"' "$path"
+          grep -q 'exec open -b "io.tuszik.md-preview"' "$path"
         }
 
         can_replace_primary() {
@@ -758,30 +745,23 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     private func installAppMenuItemIcons() {
-        checkForUpdatesMenuItem?.target = updaterController
-        checkForUpdatesMenuItem?.action = #selector(SPUStandardUpdaterController.checkForUpdates(_:))
-
-        guard let updatesItem = checkForUpdatesMenuItem,
-              let appMenu = updatesItem.menu
+        guard let appMenu = NSApp.mainMenu?.items.first?.submenu,
+              let aboutItem = appMenu.items.first(where: {
+                  $0.action == #selector(NSApplication.orderFrontStandardAboutPanel(_:))
+              })
         else { return }
 
         let cliItem = NSMenuItem(title: "Install CLI...",
                                  action: #selector(installCommandLineTools(_:)),
                                  keyEquivalent: "")
         cliItem.target = self
-        appMenu.insertItem(.separator(), at: appMenu.index(of: updatesItem) + 1)
-        appMenu.insertItem(cliItem, at: appMenu.index(of: updatesItem) + 2)
+        appMenu.insertItem(.separator(), at: appMenu.index(of: aboutItem) + 1)
+        appMenu.insertItem(cliItem, at: appMenu.index(of: aboutItem) + 2)
 
-        let icons: [(NSMenuItem, String)] = [
-            (updatesItem, "arrow.triangle.2.circlepath"),
-            (cliItem, "terminal")
-        ]
-        for (item, symbol) in icons {
-            guard let image = NSImage(systemSymbolName: symbol,
-                                      accessibilityDescription: item.title)
-            else { continue }
+        if let image = NSImage(systemSymbolName: "terminal",
+                               accessibilityDescription: cliItem.title) {
             image.isTemplate = true
-            item.image = image
+            cliItem.image = image
         }
     }
 

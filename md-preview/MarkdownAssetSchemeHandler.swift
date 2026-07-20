@@ -30,7 +30,7 @@ nonisolated final class MarkdownAssetScheme: NSObject, WKURLSchemeHandler {
     /// 3 MB Mermaid blob from disk.
     private nonisolated static let vendorDataCache = VendorDataCache()
 
-    private let queue = DispatchQueue(label: "doc.md-preview.asset-scheme", qos: .userInitiated)
+    private let queue = DispatchQueue(label: "io.tuszik.md-preview.asset-scheme", qos: .userInitiated)
     private let lock = NSLock()
     private var _baseURL: URL?
 

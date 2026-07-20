@@ -19,23 +19,17 @@
 				<string>public.markdown</string>
 				<string>net.ia.markdown</string>
 				<string>com.unknown.md</string>
-				<string>doc.md-preview.mdown</string>
-				<string>doc.md-preview.mkd</string>
-				<string>doc.md-preview.mkdn</string>
-				<string>doc.md-preview.mdwn</string>
-				<string>doc.md-preview.mdtxt</string>
-				<string>doc.md-preview.mdtext</string>
+				<string>io.tuszik.md-preview.mdown</string>
+				<string>io.tuszik.md-preview.mkd</string>
+				<string>io.tuszik.md-preview.mkdn</string>
+				<string>io.tuszik.md-preview.mdwn</string>
+				<string>io.tuszik.md-preview.mdtxt</string>
+				<string>io.tuszik.md-preview.mdtext</string>
 			</array>
 		</dict>
 	</array>
-	<key>SUEnableInstallerLauncherService</key>
-	<true/>
-	<key>SUFeedURL</key>
-	<string>https://release.md-preview.app/v1/apps/doc.md-preview/appcast.xml</string>
 	<key>NSAppleEventsUsageDescription</key>
 	<string>Markdown Preview uses Terminal to install the optional command line tools.</string>
-	<key>SUPublicEDKey</key>
-	<string>gIQjgqfjkIR+egQ4S1oBLxE/NCDxpXXGdZXSpn04VAY=</string>
 	<key>UTImportedTypeDeclarations</key>
 	<array>
 		<dict>
@@ -129,7 +123,7 @@
 			<key>UTTypeDescription</key>
 			<string>Markdown Document (mdown)</string>
 			<key>UTTypeIdentifier</key>
-			<string>doc.md-preview.mdown</string>
+			<string>io.tuszik.md-preview.mdown</string>
 			<key>UTTypeTagSpecification</key>
 			<dict>
 				<key>public.filename-extension</key>
@@ -146,7 +140,7 @@
 			<key>UTTypeDescription</key>
 			<string>Markdown Document (mkd)</string>
 			<key>UTTypeIdentifier</key>
-			<string>doc.md-preview.mkd</string>
+			<string>io.tuszik.md-preview.mkd</string>
 			<key>UTTypeTagSpecification</key>
 			<dict>
 				<key>public.filename-extension</key>
@@ -163,7 +157,7 @@
 			<key>UTTypeDescription</key>
 			<string>Markdown Document (mkdn)</string>
 			<key>UTTypeIdentifier</key>
-			<string>doc.md-preview.mkdn</string>
+			<string>io.tuszik.md-preview.mkdn</string>
 			<key>UTTypeTagSpecification</key>
 			<dict>
 				<key>public.filename-extension</key>
@@ -180,7 +174,7 @@
 			<key>UTTypeDescription</key>
 			<string>Markdown Document (mdwn)</string>
 			<key>UTTypeIdentifier</key>
-			<string>doc.md-preview.mdwn</string>
+			<string>io.tuszik.md-preview.mdwn</string>
 			<key>UTTypeTagSpecification</key>
 			<dict>
 				<key>public.filename-extension</key>
@@ -197,7 +191,7 @@
 			<key>UTTypeDescription</key>
 			<string>Markdown Document (mdtxt)</string>
 			<key>UTTypeIdentifier</key>
-			<string>doc.md-preview.mdtxt</string>
+			<string>io.tuszik.md-preview.mdtxt</string>
 			<key>UTTypeTagSpecification</key>
 			<dict>
 				<key>public.filename-extension</key>
@@ -214,7 +208,7 @@
 			<key>UTTypeDescription</key>
 			<string>Markdown Document (mdtext)</string>
 			<key>UTTypeIdentifier</key>
-			<string>doc.md-preview.mdtext</string>
+			<string>io.tuszik.md-preview.mdtext</string>
 			<key>UTTypeTagSpecification</key>
 			<dict>
 				<key>public.filename-extension</key>

@@ -1,0 +1,118 @@
+---
+name: Release
+
+on:
+    push:
+        tags: ["v*"]
+    workflow_dispatch: # dry run: builds the DMG as an artifact, publishes nothing
+
+permissions:
+    contents: write
+
+jobs:
+    test:
+        name: swift test
+        runs-on: macos-15
+        steps:
+            - uses: actions/checkout@v4
+
+            - name: Select Xcode
+              run: sudo xcode-select -s /Applications/Xcode.app
+
+            - name: Run tests
+              run: swift test --package-path tests/swift-tests
+
+    release:
+        name: build & release
+        needs: test
+        runs-on: macos-15
+        steps:
+            - uses: actions/checkout@v4
+              with:
+                fetch-depth: 0 # full history: build number is the commit count
+
+            - name: Select Xcode
+              run: sudo xcode-select -s /Applications/Xcode.app
+
+            - name: Resolve version
+              id: version
+              run: |
+                XCCONFIG_VERSION="$(grep '^MARKETING_VERSION' Version.xcconfig | sed -E 's/.*= *//')"
+                BUILD="$(git rev-list --count HEAD)"
+
+                if [[ "$GITHUB_REF_TYPE" == "tag" ]]; then
+                  TAG_VERSION="${GITHUB_REF_NAME#v}"
+                  if [[ "$TAG_VERSION" != "$XCCONFIG_VERSION" ]]; then
+                    echo "::error::tag $GITHUB_REF_NAME does not match Version.xcconfig MARKETING_VERSION=$XCCONFIG_VERSION"
+                    exit 1
+                  fi
+                  if ! grep -q "^## \[$TAG_VERSION\]" CHANGELOG.md; then
+                    echo "::error::no CHANGELOG.md entry for [$TAG_VERSION]"
+                    exit 1
+                  fi
+                  echo "publish=true" >> "$GITHUB_OUTPUT"
+                else
+                  echo "publish=false" >> "$GITHUB_OUTPUT"
+                fi
+
+                echo "version=$XCCONFIG_VERSION" >> "$GITHUB_OUTPUT"
+                echo "build=$BUILD" >> "$GITHUB_OUTPUT"
+                echo "Version $XCCONFIG_VERSION (build $BUILD)"
+
+            - name: Resolve package dependencies
+              run: xcodebuild -resolvePackageDependencies -project md-preview.xcodeproj
+
+            - name: Archive
+              run: |
+                xcodebuild archive \
+                  -project md-preview.xcodeproj \
+                  -scheme md-preview \
+                  -configuration Release \
+                  -archivePath build/md-preview.xcarchive \
+                  -destination "generic/platform=macOS" \
+                  CURRENT_PROJECT_VERSION="${{ steps.version.outputs.build }}" \
+                  CODE_SIGN_IDENTITY="-" \
+                  CODE_SIGN_STYLE=Manual \
+                  DEVELOPMENT_TEAM="" \
+                  AD_HOC_CODE_SIGNING_ALLOWED=YES
+
+            - name: Create DMG
+              id: dmg
+              run: |
+                VERSION="${{ steps.version.outputs.version }}"
+                DMG="Markdown-Preview-$VERSION.dmg"
+                STAGING="$(mktemp -d)"
+                cp -R "build/md-preview.xcarchive/Products/Applications/Markdown Preview.app" "$STAGING/"
+                ln -s /Applications "$STAGING/Applications"
+                hdiutil create -volname "Markdown Preview" -srcfolder "$STAGING" -ov -format UDZO "$DMG"
+                echo "path=$DMG" >> "$GITHUB_OUTPUT"
+
+            - name: Extract release notes
+              if: steps.version.outputs.publish == 'true'
+              run: |
+                awk -v ver="${{ steps.version.outputs.version }}" '
+                    $0 ~ "^## \\[" ver "\\]" { flag=1; next }
+                    flag && /^## \[/         { exit }
+                    flag                     { print }
+                ' CHANGELOG.md | awk 'NF{found=1} found' > release-notes.md
+                if [[ ! -s release-notes.md ]]; then
+                  echo "::error::empty CHANGELOG.md body for [${{ steps.version.outputs.version }}]"
+                  exit 1
+                fi
+
+            - name: Create GitHub release
+              if: steps.version.outputs.publish == 'true'
+              env:
+                GH_TOKEN: ${{ github.token }}
+              run: |
+                gh release create "$GITHUB_REF_NAME" \
+                  --title "Markdown Preview ${{ steps.version.outputs.version }}" \
+                  --notes-file release-notes.md \
+                  "${{ steps.dmg.outputs.path }}"
+
+            - name: Upload DMG artifact (dry run)
+              if: steps.version.outputs.publish != 'true'
+              uses: actions/upload-artifact@v4
+              with:
+                name: ${{ steps.dmg.outputs.path }}
+                path: ${{ steps.dmg.outputs.path }}
