@@ -17,7 +17,9 @@ jobs:
             - uses: actions/checkout@v4
 
             - name: Select Xcode
-              run: sudo xcode-select -s /Applications/Xcode.app
+              # Project uses SWIFT_DEFAULT_ACTOR_ISOLATION (Swift 6.2+); the image
+              # default is Xcode 16.4, so pick the newest Xcode 26 explicitly.
+              run: sudo xcode-select -s "$(ls -d /Applications/Xcode_26*.app | sort -V | tail -1)"
 
             - name: Run tests
               run: swift test --package-path tests/swift-tests
@@ -32,7 +34,9 @@ jobs:
                 fetch-depth: 0 # full history: build number is the commit count
 
             - name: Select Xcode
-              run: sudo xcode-select -s /Applications/Xcode.app
+              # Project uses SWIFT_DEFAULT_ACTOR_ISOLATION (Swift 6.2+); the image
+              # default is Xcode 16.4, so pick the newest Xcode 26 explicitly.
+              run: sudo xcode-select -s "$(ls -d /Applications/Xcode_26*.app | sort -V | tail -1)"
 
             - name: Resolve version
               id: version
