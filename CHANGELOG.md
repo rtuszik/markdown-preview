@@ -1,6 +1,21 @@
 # Changelog
 
-## [0.0.31] – 2026-07-08
+## [0.0.32], 2026-07-23
+
+First release of the [rtuszik/markdown-preview](https://github.com/rtuszik/markdown-preview) fork. The app identity changed: **this version installs as a new app alongside any previous Markdown Preview install**, it does not update or replace it. Auto-updates are gone; new versions ship as DMGs on GitHub Releases.
+
+### Changed
+
+- **New bundle identifier `io.tuszik.md-preview`.** The fork no longer shares upstream's `doc.md-preview` identity, so macOS treats it as a separate app: settings, the Quick Look extension, and default-handler registration start fresh. Remove the old app in `/Applications` if you're switching ([#1](https://github.com/rtuszik/markdown-preview/pull/1)).
+- **Releases are built by GitHub Actions.** Tagged releases are tested, archived, and packaged into a DMG entirely in CI; release notes come from this changelog ([#1](https://github.com/rtuszik/markdown-preview/pull/1)).
+- **Builds are currently unsigned.** Right-click → Open on first launch (macOS also requires System Settings → Privacy & Security → Open Anyway). Developer ID signing and notarization are planned.
+
+### Removed
+
+- **Sparkle auto-updater.** The in-app "Check for Updates…" menu item, the update feed, and the Sparkle framework are gone. To update, download the latest DMG from [Releases](https://github.com/rtuszik/markdown-preview/releases) ([#1](https://github.com/rtuszik/markdown-preview/pull/1)).
+- **Amore release tooling.** Release scripts, appcast, and hosted-update infrastructure were removed along with the Homebrew cask bump; ([#1](https://github.com/rtuszik/markdown-preview/pull/1)).
+
+## [0.0.31], 2026-07-08
 
 Opening files now respects the macOS window tabbing preference instead of always gathering documents into tabs.
 
@@ -8,7 +23,7 @@ Opening files now respects the macOS window tabbing preference instead of always
 
 - **Opening files respects the system tab preference.** Files opened from Finder, File > Open, or recent documents now follow the macOS "Prefer tabs when opening documents" setting instead of always becoming a tab in the frontmost window. Open in New Tab, ⌘T, and the tab bar's "+" button still open tabs explicitly, and windows opened via Open in New Window no longer capture subsequently opened files ([#167](https://github.com/pluk-inc/markdown-preview/pull/167)).
 
-## [0.0.30] – 2026-07-08
+## [0.0.30], 2026-07-08
 
 Markdown Preview now supports native macOS window tabs and keeps centered previews steadier while sidebars, zoom, and window resizing change the reading layout.
 
@@ -25,9 +40,9 @@ Markdown Preview now supports native macOS window tabs and keeps centered previe
 
 Thanks to the external reporter who helped improve this release:
 
-- [@huwan](https://github.com/huwan) — reported centered content jitter when toggling the sidebar and Table of Contents ([#162](https://github.com/pluk-inc/markdown-preview/issues/162))
+- [@huwan](https://github.com/huwan), reported centered content jitter when toggling the sidebar and Table of Contents ([#162](https://github.com/pluk-inc/markdown-preview/issues/162))
 
-## [0.0.29] – 2026-07-08
+## [0.0.29], 2026-07-08
 
 Markdown Preview now gives readers direct control over preview width and zoom gestures, while image rendering and Quick Look asset handling are more reliable.
 
@@ -45,10 +60,10 @@ Markdown Preview now gives readers direct control over preview width and zoom ge
 
 Thanks to the external contributors who shipped in this release:
 
-- [@huwan](https://github.com/huwan) — Content Width setting and explicit image dimension handling ([#157](https://github.com/pluk-inc/markdown-preview/pull/157), [#158](https://github.com/pluk-inc/markdown-preview/pull/158))
-- [@jjoanna2-debug](https://github.com/jjoanna2-debug) — trackpad pinch zoom and Quick Look asset containment fixes ([#156](https://github.com/pluk-inc/markdown-preview/pull/156), [#152](https://github.com/pluk-inc/markdown-preview/pull/152))
+- [@huwan](https://github.com/huwan), Content Width setting and explicit image dimension handling ([#157](https://github.com/pluk-inc/markdown-preview/pull/157), [#158](https://github.com/pluk-inc/markdown-preview/pull/158))
+- [@jjoanna2-debug](https://github.com/jjoanna2-debug), trackpad pinch zoom and Quick Look asset containment fixes ([#156](https://github.com/pluk-inc/markdown-preview/pull/156), [#152](https://github.com/pluk-inc/markdown-preview/pull/152))
 
-## [0.0.28] – 2026-06-12
+## [0.0.28], 2026-06-12
 
 Markdown Preview now has a simpler default Open toolbar action that combines editor and AI app handoffs in one menu.
 
@@ -61,7 +76,7 @@ Markdown Preview now has a simpler default Open toolbar action that combines edi
 
 - **AI app handoff is more reliable.** ChatGPT now receives Markdown documents through the app's document-open flow, and Claude handoff includes the Markdown content directly instead of depending on an unsupported file parameter ([#150](https://github.com/pluk-inc/markdown-preview/pull/150)).
 
-## [0.0.27] – 2026-06-11
+## [0.0.27], 2026-06-11
 
 Markdown Preview now includes a native Appearance menu for choosing Automatic, Light, or Dark mode, adds Vim-style preview scrolling, and restores standard blockquote styling.
 
@@ -78,11 +93,11 @@ Markdown Preview now includes a native Appearance menu for choosing Automatic, L
 
 Thanks to the external reporters who helped improve this release:
 
-- [@rsalesas](https://github.com/rsalesas) — requested a light/dark appearance setting ([#115](https://github.com/pluk-inc/markdown-preview/issues/115))
-- [@rtuszik](https://github.com/rtuszik) — requested `j`/`k` preview scrolling ([#142](https://github.com/pluk-inc/markdown-preview/issues/142))
-- [@odrobnik](https://github.com/odrobnik) — reported blockquotes being styled like code blocks ([#145](https://github.com/pluk-inc/markdown-preview/issues/145))
+- [@rsalesas](https://github.com/rsalesas), requested a light/dark appearance setting ([#115](https://github.com/pluk-inc/markdown-preview/issues/115))
+- [@rtuszik](https://github.com/rtuszik), requested `j`/`k` preview scrolling ([#142](https://github.com/pluk-inc/markdown-preview/issues/142))
+- [@odrobnik](https://github.com/odrobnik), reported blockquotes being styled like code blocks ([#145](https://github.com/pluk-inc/markdown-preview/issues/145))
 
-## [0.0.26] – 2026-05-31
+## [0.0.26], 2026-05-31
 
 Markdown Preview now works more naturally as a multi-window document app, can browse Markdown folders directly, and includes app handoff and command-line installation tools for local workflows.
 
@@ -98,10 +113,10 @@ Markdown Preview now works more naturally as a multi-window document app, can br
 
 Thanks to the external reporters who helped improve this release:
 
-- [@tututuhehehe](https://github.com/tututuhehehe) — requested multiple document window support ([#130](https://github.com/pluk-inc/markdown-preview/issues/130))
-- [@Ptujec](https://github.com/Ptujec) — requested Space and Shift-Space preview scrolling ([#129](https://github.com/pluk-inc/markdown-preview/issues/129))
+- [@tututuhehehe](https://github.com/tututuhehehe), requested multiple document window support ([#130](https://github.com/pluk-inc/markdown-preview/issues/130))
+- [@Ptujec](https://github.com/Ptujec), requested Space and Shift-Space preview scrolling ([#129](https://github.com/pluk-inc/markdown-preview/issues/129))
 
-## [0.0.25] – 2026-05-21
+## [0.0.25], 2026-05-21
 
 Markdown Preview now handles common editor save workflows more reliably, strips TOML frontmatter before rendering, and keeps code-copy output clean when selecting the whole preview.
 
@@ -118,10 +133,10 @@ Markdown Preview now handles common editor save workflows more reliably, strips 
 
 Thanks to the external reporters who helped improve this release:
 
-- [@gglanzani](https://github.com/gglanzani) — reported TOML frontmatter rendering and atomic-save reload issues ([#118](https://github.com/pluk-inc/markdown-preview/issues/118), [#119](https://github.com/pluk-inc/markdown-preview/issues/119))
-- [@OzzyCzech](https://github.com/OzzyCzech) — reported copy button text leaking into selected code copy output ([#120](https://github.com/pluk-inc/markdown-preview/issues/120))
+- [@gglanzani](https://github.com/gglanzani), reported TOML frontmatter rendering and atomic-save reload issues ([#118](https://github.com/pluk-inc/markdown-preview/issues/118), [#119](https://github.com/pluk-inc/markdown-preview/issues/119))
+- [@OzzyCzech](https://github.com/OzzyCzech), reported copy button text leaking into selected code copy output ([#120](https://github.com/pluk-inc/markdown-preview/issues/120))
 
-## [0.0.24] – 2026-05-19
+## [0.0.24], 2026-05-19
 
 GitHub-style alert blockquotes now render with their intended labels, and the Open With menu finds more Markdown editors.
 
@@ -137,9 +152,9 @@ GitHub-style alert blockquotes now render with their intended labels, and the Op
 
 Thanks to the external contributor who shipped in this release:
 
-- [@jphastings](https://github.com/jphastings) — GitHub-style alert blockquotes ([#113](https://github.com/pluk-inc/markdown-preview/pull/113))
+- [@jphastings](https://github.com/jphastings), GitHub-style alert blockquotes ([#113](https://github.com/pluk-inc/markdown-preview/pull/113))
 
-## [0.0.23] – 2026-05-18
+## [0.0.23], 2026-05-18
 
 Fenced code blocks that carry extra metadata after the language now render the way they should.
 
@@ -151,9 +166,9 @@ Fenced code blocks that carry extra metadata after the language now render the w
 
 Thanks to the external contributors who shipped in this release:
 
-- [@jphastings](https://github.com/jphastings) — fenced code block info-string language handling ([#109](https://github.com/pluk-inc/markdown-preview/pull/109))
+- [@jphastings](https://github.com/jphastings), fenced code block info-string language handling ([#109](https://github.com/pluk-inc/markdown-preview/pull/109))
 
-## [0.0.22] – 2026-05-14
+## [0.0.22], 2026-05-14
 
 Markdown Preview now sanitizes rendered HTML before it reaches the preview WebView, and Sparkle update checks point at the Amore-published appcast.
 
@@ -173,10 +188,10 @@ Markdown Preview now sanitizes rendered HTML before it reaches the preview WebVi
 
 Thanks to the external contributors who shipped in this release:
 
-- [@luuccaaaa](https://github.com/luuccaaaa) — rendered Markdown HTML sanitization with DOMPurify ([#104](https://github.com/pluk-inc/markdown-preview/pull/104))
-- [@lucasfischer](https://github.com/lucasfischer) — Amore sponsor credit ([#105](https://github.com/pluk-inc/markdown-preview/pull/105))
+- [@luuccaaaa](https://github.com/luuccaaaa), rendered Markdown HTML sanitization with DOMPurify ([#104](https://github.com/pluk-inc/markdown-preview/pull/104))
+- [@lucasfischer](https://github.com/lucasfischer), Amore sponsor credit ([#105](https://github.com/pluk-inc/markdown-preview/pull/105))
 
-## [0.0.21] – 2026-05-11
+## [0.0.21], 2026-05-11
 
 The table of contents now follows your reading position, the Project Navigator reacts to folder changes, and code blocks are easier to copy.
 
@@ -194,9 +209,9 @@ The table of contents now follows your reading position, the Project Navigator r
 
 Thanks to the external contributor who shipped in this release:
 
-- [@luuccaaaa](https://github.com/luuccaaaa) — table of contents scrollspy, live Project Navigator updates, and stable navigator roots ([#101](https://github.com/pluk-inc/markdown-preview/pull/101))
+- [@luuccaaaa](https://github.com/luuccaaaa), table of contents scrollspy, live Project Navigator updates, and stable navigator roots ([#101](https://github.com/pluk-inc/markdown-preview/pull/101))
 
-## [0.0.20] – 2026-05-09
+## [0.0.20], 2026-05-09
 
 The sidebar toolbar menu now stays responsive and shows the correct selected mode after toolbar customization.
 
@@ -204,7 +219,7 @@ The sidebar toolbar menu now stays responsive and shows the correct selected mod
 
 - **Sidebar mode menu survives toolbar customization.** The toolbar's Sidebar pull-down no longer lets Customize Toolbar palette copies steal the live menu reference, so Table of Contents and Project Navigator keep responding and their checkmarks stay in sync after closing the native customization sheet.
 
-## [0.0.19] – 2026-05-09
+## [0.0.19], 2026-05-09
 
 Syntax highlighting is back without the Shiki startup cost, the sidebar can browse sibling Markdown files, and preview reading controls are easier to reach.
 
@@ -230,10 +245,10 @@ Syntax highlighting is back without the Shiki startup cost, the sidebar can brow
 
 Thanks to the external contributors who reported issues fixed in this release:
 
-- [@amiramir](https://github.com/amiramir) — reported the preview zoom request ([#91](https://github.com/pluk-inc/md-preview.app/issues/91))
-- [@MyCometG3](https://github.com/MyCometG3) — reported keyboard navigation improvements covered by the new scroll actions ([#92](https://github.com/pluk-inc/md-preview.app/issues/92))
+- [@amiramir](https://github.com/amiramir), reported the preview zoom request ([#91](https://github.com/pluk-inc/md-preview.app/issues/91))
+- [@MyCometG3](https://github.com/MyCometG3), reported keyboard navigation improvements covered by the new scroll actions ([#92](https://github.com/pluk-inc/md-preview.app/issues/92))
 
-## [0.0.18] – 2026-05-07
+## [0.0.18], 2026-05-07
 
 A faster cold launch, snappier file switches, and a temporary step back on syntax highlighting while a non-blocking solution is built.
 
@@ -243,31 +258,31 @@ A faster cold launch, snappier file switches, and a temporary step back on synta
 
 ### Changed
 
-- **Cold-open of a 4 KB markdown file dropped from ~400 ms to ~50 ms (5–8× faster perceived load).** Vendor JS used to be inlined in the HTML head, blocking the parser on every load. It now lazy-loads after first paint via the `md-asset:` scheme, so the article is visible before the bundles finish downloading. The asset-scheme handler caches vendor blobs in `NSCache` and resolves `__vendor/<file>` paths from the app bundle independently of the user-file base URL. Quick Look continues to use inline delivery because its `QLPreviewReply` payload model bundles HTML and attachments differently ([#84](https://github.com/pluk-inc/md-preview.app/pull/84)).
-- **Switching files takes a fast path instead of a full WebView reload.** When the renderer mix matches what's already loaded, the article body is swapped in place via `MdPreview.update(articleHTML)` and each renderer's idempotent reapplier re-runs — no `loadHTMLString` reload, no vendor re-parse. A `RendererFingerprint.covers(_:)` check lets any subset of renderers fast-path into the all-true warmup state ([#84](https://github.com/pluk-inc/md-preview.app/pull/84)).
+- **Cold-open of a 4 KB markdown file dropped from ~400 ms to ~50 ms (5, 8× faster perceived load).** Vendor JS used to be inlined in the HTML head, blocking the parser on every load. It now lazy-loads after first paint via the `md-asset:` scheme, so the article is visible before the bundles finish downloading. The asset-scheme handler caches vendor blobs in `NSCache` and resolves `__vendor/<file>` paths from the app bundle independently of the user-file base URL. Quick Look continues to use inline delivery because its `QLPreviewReply` payload model bundles HTML and attachments differently ([#84](https://github.com/pluk-inc/md-preview.app/pull/84)).
+- **Switching files takes a fast path instead of a full WebView reload.** When the renderer mix matches what's already loaded, the article body is swapped in place via `MdPreview.update(articleHTML)` and each renderer's idempotent reapplier re-runs, no `loadHTMLString` reload, no vendor re-parse. A `RendererFingerprint.covers(_:)` check lets any subset of renderers fast-path into the all-true warmup state ([#84](https://github.com/pluk-inc/md-preview.app/pull/84)).
 - **Stale content clears while sheets are dismissing.** Opening a new file now blanks the preview during sheet dismissal so the previous doc doesn't linger behind the open panel ([#84](https://github.com/pluk-inc/md-preview.app/pull/84)).
 
 ### Removed
 
 - **Syntax highlighting (Shiki) removed for now.** Shiki was pinning the JS thread for ~1 s on a code block's first cold grammar compile (TypeScript was the worst offender), even after launch warmup, idle-defer, per-block IntersectionObserver, and post-paint background grammar warmups. The cost is inherent to TextMate-grammar regex compilation on the main thread, so the only viable fix is moving Shiki into a Web Worker, which warrants its own release. Code blocks now render with the existing monospace + rounded grey background, just without per-token color. The 2.5 MB `shiki.bundle.js` is no longer shipped in the app bundle.
 
-## [0.0.17] – 2026-05-07
+## [0.0.17], 2026-05-07
 
-Two macOS 26 fixes — the window opens at full size again, and inline math renders correctly in RTL paragraphs.
+Two macOS 26 fixes, the window opens at full size again, and inline math renders correctly in RTL paragraphs.
 
 ### Fixed
 
-- **Window no longer launches collapsed on macOS 26.** The find bar's bottom rule (an `NSBox` with `boxType = .separator`) inside a bottom `NSTitlebarAccessoryViewController` was triggering an AppKit layout regression that bypassed the window's `contentMinSize` and snapped the window to the toolbar's natural minimum width (~169 pt) on launch. Only vertical resizing worked, and toggling the sidebar made the window disappear. Replaced the find-bar separator and the access banner's separators with a 1 pt `NSView` filled with `NSColor.separatorColor` — same look, no regression ([#79](https://github.com/pluk-inc/md-preview.app/issues/79), [#81](https://github.com/pluk-inc/md-preview.app/pull/81)).
+- **Window no longer launches collapsed on macOS 26.** The find bar's bottom rule (an `NSBox` with `boxType = .separator`) inside a bottom `NSTitlebarAccessoryViewController` was triggering an AppKit layout regression that bypassed the window's `contentMinSize` and snapped the window to the toolbar's natural minimum width (~169 pt) on launch. Only vertical resizing worked, and toggling the sidebar made the window disappear. Replaced the find-bar separator and the access banner's separators with a 1 pt `NSView` filled with `NSColor.separatorColor`, same look, no regression ([#79](https://github.com/pluk-inc/md-preview.app/issues/79), [#81](https://github.com/pluk-inc/md-preview.app/pull/81)).
 - **Inline KaTeX math stays LTR inside RTL paragraphs.** Math embedded in Hebrew / Arabic paragraphs was inheriting the surrounding RTL direction and rendering reversed (e.g. `$f(x)=x^2$` came out as `f(x) = ^2x`). The Markdown stylesheet now pins `.katex` to `direction: ltr` with `unicode-bidi: isolate`, so math renders LTR while the surrounding RTL text continues to flow right-to-left ([#76](https://github.com/pluk-inc/md-preview.app/pull/76)).
 
 ### Contributors
 
 Thanks to the external contributors who shipped in this release:
 
-- [@manemajef](https://github.com/manemajef) — inline KaTeX math direction fix in RTL paragraphs ([#76](https://github.com/pluk-inc/md-preview.app/pull/76))
-- [@pryley](https://github.com/pryley) — reported the window-collapse bug on macOS 26 ([#79](https://github.com/pluk-inc/md-preview.app/issues/79))
+- [@manemajef](https://github.com/manemajef), inline KaTeX math direction fix in RTL paragraphs ([#76](https://github.com/pluk-inc/md-preview.app/pull/76))
+- [@pryley](https://github.com/pryley), reported the window-collapse bug on macOS 26 ([#79](https://github.com/pluk-inc/md-preview.app/issues/79))
 
-## [0.0.16] – 2026-05-07
+## [0.0.16], 2026-05-07
 
 Mermaid diagrams you can pan and zoom, faster live-preview saves, and a polished find bar and sidebar.
 
@@ -280,7 +295,7 @@ Mermaid diagrams you can pan and zoom, faster live-preview saves, and a polished
 
 ### Changed
 
-- **Saves no longer reload the whole preview.** When the page is already loaded and the renderer mix (math / Mermaid / Shiki) hasn't changed, the article body is swapped via `evaluateJavaScript` and each renderer's idempotent reapplier re-runs in place — saves no longer reparse the 3 MB Mermaid bundle and 2.5 MB Shiki bundle. First load and renderer-mix changes still do a full HTML load, and `<base href="md-asset:///">` ships unconditionally so asset swaps don't force a reload ([#62](https://github.com/pluk-inc/md-preview.app/pull/62)).
+- **Saves no longer reload the whole preview.** When the page is already loaded and the renderer mix (math / Mermaid / Shiki) hasn't changed, the article body is swapped via `evaluateJavaScript` and each renderer's idempotent reapplier re-runs in place, saves no longer reparse the 3 MB Mermaid bundle and 2.5 MB Shiki bundle. First load and renderer-mix changes still do a full HTML load, and `<base href="md-asset:///">` ships unconditionally so asset swaps don't force a reload ([#62](https://github.com/pluk-inc/md-preview.app/pull/62)).
 - **Mermaid diagrams render lazily with reserved layout space.** Each figure renders on intersection via `IntersectionObserver` instead of one big `mermaid.run`, and reserves space using `aspect-ratio` from its viewBox so the document height stops bouncing as diagrams stream in. `contain: strict` on the zoom stage isolates layout and paint ([#62](https://github.com/pluk-inc/md-preview.app/pull/62)).
 - **Web view height is now push-based.** A new `mdPreviewHost` script-message handler pushes content height from JS via `ResizeObserver` plus per-renderer done events, replacing the staggered Mermaid (`[0.6, 1.2, 2.4]s`), KaTeX / Shiki (`[0.15, 0.4, 0.9]s`), and inner-cascade polls. Height updates arrive exactly when layout changes ([#62](https://github.com/pluk-inc/md-preview.app/pull/62)).
 - **Re-displaying the same file is a no-op in the sidebar.** When the file watcher fires with identical markdown and file name, the sidebar skips the parse + reload + re-expand cycle, preserving expansion state without flicker ([#77](https://github.com/pluk-inc/md-preview.app/pull/77)).
@@ -293,9 +308,9 @@ Mermaid diagrams you can pan and zoom, faster live-preview saves, and a polished
 
 Thanks to the external contributor who shipped in this release:
 
-- [@hailam](https://github.com/hailam) — Mermaid pan/zoom, lazy rendering, push-based height, and reload-free saves ([#62](https://github.com/pluk-inc/md-preview.app/pull/62))
+- [@hailam](https://github.com/hailam), Mermaid pan/zoom, lazy rendering, push-based height, and reload-free saves ([#62](https://github.com/pluk-inc/md-preview.app/pull/62))
 
-## [0.0.15] – 2026-05-06
+## [0.0.15], 2026-05-06
 
 A proper find bar and right-to-left text support.
 
@@ -308,9 +323,9 @@ A proper find bar and right-to-left text support.
 
 Thanks to the external contributor who shipped in this release:
 
-- [@manemajef](https://github.com/manemajef) — automatic RTL text direction support ([#67](https://github.com/pluk-inc/md-preview.app/pull/67))
+- [@manemajef](https://github.com/manemajef), automatic RTL text direction support ([#67](https://github.com/pluk-inc/md-preview.app/pull/67))
 
-## [0.0.14] – 2026-05-06
+## [0.0.14], 2026-05-06
 
 Quick Look now renders relative images.
 
@@ -322,9 +337,9 @@ Quick Look now renders relative images.
 
 Thanks to the external contributor who shipped in this release:
 
-- [@DivineDominion](https://github.com/DivineDominion) — relative images in Quick Look previews ([#68](https://github.com/pluk-inc/md-preview.app/pull/68))
+- [@DivineDominion](https://github.com/DivineDominion), relative images in Quick Look previews ([#68](https://github.com/pluk-inc/md-preview.app/pull/68))
 
-## [0.0.13] – 2026-05-05
+## [0.0.13], 2026-05-05
 
 Native printing, plus two rendering fixes.
 
@@ -337,7 +352,7 @@ Native printing, plus two rendering fixes.
 - **GFM task lists render inline without a duplicate bullet.** Task list items were drawing both a list marker and a checkbox with the label wrapping to a new line below. Task `<li>`s and their checkboxes are now tagged with GitHub's `task-list-item` / `task-list-item-checkbox` class names, so CSS suppresses the marker and the first paragraph stays inline next to the checkbox ([#63](https://github.com/pluk-inc/md-preview.app/issues/63)).
 - **No placeholder content on launch.** Removed the leftover "WKWebView pipeline is live" sample that the split view rendered at startup, so the app opens with an empty preview area until you load a document.
 
-## [0.0.12] – 2026-05-05
+## [0.0.12], 2026-05-05
 
 Code highlighting, richer Markdown heading and footnote rendering, and README sponsor updates.
 
@@ -350,7 +365,7 @@ Code highlighting, richer Markdown heading and footnote rendering, and README sp
 - **Footnotes now render correctly.** Markdown footnote definitions and references are collected, linked, and rendered as a proper footnotes section instead of appearing as plain paragraph content.
 - **Inline markup works inside headings.** Emphasis, links, code spans, and other inline Markdown now render correctly inside heading text while keeping generated heading anchors stable.
 
-## [0.0.11] – 2026-05-04
+## [0.0.11], 2026-05-04
 
 Homebrew install path and stronger default-handler claims for Markdown files.
 
@@ -363,7 +378,7 @@ Homebrew install path and stronger default-handler claims for Markdown files.
 - **Markdown Preview now wins as the default `.md` handler on more setups.** `LSHandlerRank` for the standard markdown UTI was promoted from `Default` to `Owner`, so LaunchServices prefers Markdown Preview over apps that only assert a weaker claim. Users who previously had to set "Always Open With" by hand should pick the app up automatically after a fresh install.
 - **Long-tail markdown extensions are now claimed uncontested.** `.mdown`, `.mkd`, `.mkdn`, `.mdwn`, `.mdtxt`, and `.mdtext` are exported under app-private UTIs (`doc.md-preview.*`) that conform to `net.daringfireball.markdown`. Because no other app declares UTIs in that namespace, LaunchServices has no competing candidate for these files and Markdown Preview opens them without requiring user intervention.
 
-## [0.0.10] – 2026-05-04
+## [0.0.10], 2026-05-04
 
 LaTeX math rendering, broader Markdown file-format support, and a rendering fix for inline HTML in body text and code.
 
@@ -381,18 +396,18 @@ LaTeX math rendering, broader Markdown file-format support, and a rendering fix 
 
 Thanks to the external contributors who shipped in this release:
 
-- [@dppeak](https://github.com/dppeak) — broader Markdown file-format support ([#31](https://github.com/pluk-inc/md-preview.app/pull/31))
-- [@yaksher](https://github.com/yaksher) — reported the HTML-escape bug fixed in [#35](https://github.com/pluk-inc/md-preview.app/pull/35) ([#33](https://github.com/pluk-inc/md-preview.app/issues/33))
+- [@dppeak](https://github.com/dppeak), broader Markdown file-format support ([#31](https://github.com/pluk-inc/md-preview.app/pull/31))
+- [@yaksher](https://github.com/yaksher), reported the HTML-escape bug fixed in [#35](https://github.com/pluk-inc/md-preview.app/pull/35) ([#33](https://github.com/pluk-inc/md-preview.app/issues/33))
 
-## [0.0.9] – 2026-05-03
+## [0.0.9], 2026-05-03
 
 Mermaid diagram rendering in the app and Quick Look.
 
-- **Fenced `mermaid` code blocks now render as diagrams.** The Markdown pipeline detects `mermaid` fences, swaps them for diagram containers, and runs the Mermaid renderer on load — flowcharts, sequence diagrams, class diagrams, and the rest show up inline instead of as raw code.
+- **Fenced `mermaid` code blocks now render as diagrams.** The Markdown pipeline detects `mermaid` fences, swaps them for diagram containers, and runs the Mermaid renderer on load, flowcharts, sequence diagrams, class diagrams, and the rest show up inline instead of as raw code.
 - **Renderer is bundled, so previews work offline.** The Mermaid script ships inside the app bundle and is shared with the Quick Look extension; no CDN request is made when opening a document.
 - **Diagrams follow the system appearance.** Mermaid initializes with the dark theme when the system is in dark mode and the default theme otherwise, and uses the SF system font so labels match the surrounding text.
 
-## [0.0.8] – 2026-05-03
+## [0.0.8], 2026-05-03
 
 Tabbed Inspector with native segmented picker.
 
@@ -400,7 +415,7 @@ Tabbed Inspector with native segmented picker.
 - **Empty Properties tab shows a placeholder.** Documents without frontmatter now display "No YAML frontmatter" filling the available space, so the tab doesn't collapse to nothing.
 - **Picker matches Apple's pill-style segmented look on macOS 26 Tahoe.** Uses `.controlSize(.large)` plus `.buttonSizing(.flexible)` on Tahoe and falls back to `.fixedSize()` on macOS 15 Sequoia.
 
-## [0.0.7] – 2026-05-03
+## [0.0.7], 2026-05-03
 
 YAML frontmatter rendering fix and Inspector metadata.
 
@@ -408,47 +423,47 @@ YAML frontmatter rendering fix and Inspector metadata.
 - **Frontmatter shows up in the Inspector.** A new **Properties** section at the top of the Inspector lists each key/value pair from the document's frontmatter, so the metadata is one click away even though it's hidden from the rendered preview. The Quick Look extension hides it too.
 - **Word, line, and heading counts now reflect body content.** The Inspector's stats no longer include the frontmatter block in their totals.
 
-## [0.0.6] – 2026-05-02
+## [0.0.6], 2026-05-02
 
 Toolbar, banner, and table-of-contents polish.
 
 - **Search field collapses to a magnifying-glass button in narrow windows.** When the toolbar is too tight to fit the expanded search field, it now folds into an icon-only button matching the rest of the toolbar instead of being clipped.
 - **Open With toolbar item shows the resolved editor.** When a default Markdown editor is set, the toolbar item now reads "Open in <Editor>" as both label and tooltip, and the menu lists apps by their Finder display name without the `.app` suffix. The chosen editor's location is also remembered alongside its bundle ID, so launches still resolve when the bundle ID is unavailable.
 - **Folder-access banner no longer clips text on macOS 15.** The banner now advertises a fixed height to the titlebar accessory so descenders in the message label aren't cut off, and the redundant top/bottom separators are hidden on macOS 15 (where AppKit already draws system ones).
-- **Folder-access banner stays until access is granted.** Removed the dismiss button so the prompt no longer disappears when accidentally clicked — it now goes away only after you grant read access to the folder.
+- **Folder-access banner stays until access is granted.** Removed the dismiss button so the prompt no longer disappears when accidentally clicked, it now goes away only after you grant read access to the folder.
 - **TOC clicks scroll headings below the toolbar.** Jumping to a heading from the sidebar now accounts for the toolbar height plus a small breathing margin, so the target heading lands in view instead of behind the toolbar.
 - **Share toolbar button is the right size.** The share item no longer renders an oversized icon next to the other toolbar buttons.
 
-## [0.0.5] – 2026-05-02
+## [0.0.5], 2026-05-02
 
 Small fullscreen polish for the sidebar.
 
-- **Sidebar title sits correctly in fullscreen.** The document title at the top of the table-of-contents pane no longer slides under the toolbar when the window enters fullscreen — it now anchors to the safe-area inset and stays put in both windowed and fullscreen modes.
+- **Sidebar title sits correctly in fullscreen.** The document title at the top of the table-of-contents pane no longer slides under the toolbar when the window enters fullscreen, it now anchors to the safe-area inset and stays put in both windowed and fullscreen modes.
 
-## [0.0.4] – 2026-05-02
+## [0.0.4], 2026-05-02
 
 Relative images and links in Markdown files now render in the sandboxed app.
 
 - **Render relative local assets via a folder-access banner.** When a document references images or files alongside it, Markdown Preview now shows an in-window banner offering to grant read access to the parent folder. Once granted, the access is remembered across launches and assets load through a dedicated `md-asset://` scheme so they appear inline in the preview.
 - **Stable DMG filename for GitHub releases.** The DMG attached to each GitHub release is now `Markdown-Preview.dmg` without a version suffix, so download links stay valid across versions.
 
-## [0.0.3] – 2026-05-02
+## [0.0.3], 2026-05-02
 
 Better Markdown rendering and a tidier **Open With** menu.
 
 - **Switched the Markdown engine to swift-markdown (cmark-gfm).** Rendering is now CommonMark- and GitHub-Flavored-Markdown-compliant, so tables, task lists, strikethrough, and autolinks render the way you'd expect on GitHub.
-- **Fixed the Open With list.** No more duplicate Markdown Preview entries from old build copies, and unrelated apps that only claim a generic plain-text association no longer show up — only apps that actually edit Markdown are listed.
+- **Fixed the Open With list.** No more duplicate Markdown Preview entries from old build copies, and unrelated apps that only claim a generic plain-text association no longer show up, only apps that actually edit Markdown are listed.
 
-## [0.0.2] – 2026-05-01
+## [0.0.2], 2026-05-01
 
 Compatibility release: Markdown Preview now runs on macOS 15 Sequoia in addition to macOS 26 Tahoe.
 
 - **Lowered the minimum macOS version to 15.0 (Sequoia).** Previously required macOS 26 Tahoe.
-- **Replaced the app icon with an Icon Composer `.icon` bundle.** Fixes the icon appearing oversized on Sequoia — the system now applies its own mask and the standard safe-area inset.
+- **Replaced the app icon with an Icon Composer `.icon` bundle.** Fixes the icon appearing oversized on Sequoia, the system now applies its own mask and the standard safe-area inset.
 
-## [0.0.1] – 2026-04-30
+## [0.0.1], 2026-04-30
 
-First public build of Markdown Preview — a fast, native macOS reader for `.md` files.
+First public build of Markdown Preview, a fast, native macOS reader for `.md` files.
 
 ### Highlights
 
