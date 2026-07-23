@@ -21,7 +21,7 @@ Version is managed centrally in `Version.xcconfig`. `MARKETING_VERSION` is the s
 
 Releases are cut from `main`, no release branches or PRs. CI is the gate: the workflow refuses to publish if the tag, `Version.xcconfig`, and `CHANGELOG.md` disagree.
 
-1. **Add a `CHANGELOG.md` entry** for the version being shipped:
+1. **Add a `CHANGELOG.md` entry** for the version being shipped (heading is `## [X.Y.Z], YYYY-MM-DD` with a comma before the date, not the Keep-a-Changelog en-dash: a repo formatter hook rewrites en/em dashes to commas):
 
    ```md
    ## [0.0.32], 2026-07-20

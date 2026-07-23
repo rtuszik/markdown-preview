@@ -23,7 +23,7 @@ Releases are cut directly from `main`, no release branches or PRs. CI is the gat
 
 1. **Add a `CHANGELOG.md` entry** for the version being shipped. **Always invoke the `changelog-maintenance` skill** (`.claude/skills/changelog-maintenance`) via the Skill tool whenever the user asks you to write, generate, or update a changelog entry, do not draft freeform. The skill enforces the house format, the Keep-a-Changelog category split (Added / Changed / Fixed / Security), and contributor crediting.
 
-   Entry shape:
+   Entry shape (heading is `## [X.Y.Z], YYYY-MM-DD` with a comma before the date, not the Keep-a-Changelog en-dash: a repo formatter hook rewrites en/em dashes to commas, even inside code spans, so using an en-dash just causes churn):
 
    ```md
    ## [0.0.32], 2026-07-20

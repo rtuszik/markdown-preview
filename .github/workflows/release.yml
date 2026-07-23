@@ -12,13 +12,11 @@ permissions:
 jobs:
     test:
         name: swift test
-        runs-on: macos-15
+        runs-on: macos-26
         steps:
-            - uses: actions/checkout@v4
+            - uses: actions/checkout@v7
 
             - name: Select Xcode
-              # Project uses SWIFT_DEFAULT_ACTOR_ISOLATION (Swift 6.2+); the image
-              # default is Xcode 16.4, so pick the newest Xcode 26 explicitly.
               run: sudo xcode-select -s "$(ls -d /Applications/Xcode_26*.app | sort -V | tail -1)"
 
             - name: Run tests
@@ -27,11 +25,11 @@ jobs:
     release:
         name: build & release
         needs: test
-        runs-on: macos-15
+        runs-on: macos-26
         steps:
-            - uses: actions/checkout@v4
+            - uses: actions/checkout@v7
               with:
-                fetch-depth: 0 # full history: build number is the commit count
+                fetch-depth: 0
 
             - name: Select Xcode
               # Project uses SWIFT_DEFAULT_ACTOR_ISOLATION (Swift 6.2+); the image
@@ -116,7 +114,7 @@ jobs:
 
             - name: Upload DMG artifact (dry run)
               if: steps.version.outputs.publish != 'true'
-              uses: actions/upload-artifact@v4
+              uses: actions/upload-artifact@v7
               with:
                 name: ${{ steps.dmg.outputs.path }}
                 path: ${{ steps.dmg.outputs.path }}
