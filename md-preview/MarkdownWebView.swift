@@ -323,6 +323,10 @@ final class MarkdownWebView: NSView, WKNavigationDelegate {
                 performScrollAction(.pageUp)
             case "pageDown":
                 performScrollAction(.pageDown)
+            case "top":
+                performScrollAction(.top)
+            case "bottom":
+                performScrollAction(.bottom)
             default:
                 break
             }

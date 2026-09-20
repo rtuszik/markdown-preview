@@ -136,6 +136,14 @@ final class MainSplitViewController: NSSplitViewController {
         sidebar.animator().isCollapsed = false
     }
 
+    func focusProjectNavigator() {
+        sidebarViewController?.focusProjectNavigator()
+    }
+
+    func focusPreview() {
+        contentViewController?.focusPreview()
+    }
+
     var sidebarMode: SidebarViewController.Mode {
         sidebarViewController?.currentMode ?? .outline
     }

@@ -804,9 +804,30 @@ nonisolated enum MarkdownHTML {
             ].join(','));
         }
 
+        let pendingTopKeyAt = null;
+        window.addEventListener('blur', () => { pendingTopKeyAt = null; });
+        document.addEventListener('focusin', () => { pendingTopKeyAt = null; });
+
         function handlePreviewScrollKey(event) {
-            if (event.defaultPrevented || event.metaKey || event.ctrlKey || event.altKey || event.isComposing) return false;
-            if (keyBelongsToFocusedControl(event.target)) return false;
+            if (event.defaultPrevented || event.metaKey || event.ctrlKey || event.altKey || event.isComposing
+                || keyBelongsToFocusedControl(event.target)) {
+                pendingTopKeyAt = null;
+                return false;
+            }
+
+            if (event.key === 'g' && !event.shiftKey) {
+                // Holding g must not count as the second press of gg.
+                if (event.repeat) return false;
+                const now = event.timeStamp;
+                if (pendingTopKeyAt !== null && now - pendingTopKeyAt <= 1000) {
+                    pendingTopKeyAt = null;
+                    return post({ kind: 'scroll', value: 'top' });
+                }
+                pendingTopKeyAt = now;
+                return false;
+            }
+            pendingTopKeyAt = null;
+            if (event.key === 'G') return post({ kind: 'scroll', value: 'bottom' });
 
             const isSpace = event.key === ' ' || event.key === 'Spacebar' || event.code === 'Space';
             if (isSpace) {

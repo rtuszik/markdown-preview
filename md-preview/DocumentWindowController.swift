@@ -451,6 +451,18 @@ final class DocumentWindowController: NSWindowController, NSWindowDelegate, NSTo
         syncSidebarMenuState()
     }
 
+    @objc func toggleProjectNavigator(_ sender: Any?) {
+        guard let split = documentWindow.contentViewController as? MainSplitViewController else { return }
+        let state = currentSidebarMenuState()
+        if state.sidebarVisible && state.mode == .files {
+            split.focusPreview()
+            hideSidebarFromMenu(sender)
+        } else {
+            selectFilesMode(sender)
+            split.focusProjectNavigator()
+        }
+    }
+
     @objc func hideSidebarFromMenu(_ sender: Any?) {
         guard let split = documentWindow.contentViewController as? MainSplitViewController,
               split.isSidebarVisible else { return }

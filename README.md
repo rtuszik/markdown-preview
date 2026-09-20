@@ -8,7 +8,6 @@
   A fast, native macOS app for reading Markdown files.
 </p>
 
-
 ---
 
 Forked before the editor and telemetry releases.
@@ -47,6 +46,8 @@ Builds are currently unsigned, on first launch, right-click the app and choose *
 - **Mermaid diagrams**, fenced `mermaid` code blocks render as diagrams in both the app and Quick Look previews, using a bundled renderer so previews work offline without a CDN request.
 - **Math equations**, LaTeX inline (`$x_1 + x_2$`), display (`$$\int_0^1 x^2\,dx$$`), and fenced `math` blocks render with a bundled KaTeX. Selecting a rendered formula and copying yields the original LaTeX source (via the official `copy-tex` extension).
 - **Document outline**, sidebar TOC that mirrors your headings; click to jump.
+- **Keyboard navigation**, <kbd>j</kbd> / <kbd>k</kbd> scroll down/up, <kbd>gg</kbd> jumps to the top, and <kbd>G</kbd> (Shift+G) jumps to the bottom. <kbd>⌘S</kbd> toggles between the project navigator and a hidden sidebar; from the table of contents, it opens the navigator.
+- **Navigator keyboard controls**, <kbd>⌘S</kbd> focuses the navigator when opening it and returns focus to the preview when hiding it. In the navigator, <kbd>j</kbd> / <kbd>k</kbd> select the next/previous row, <kbd>l</kbd> enters a folder or opens a file, and <kbd>h</kbd> collapses a folder or selects its parent.
 - **Inspector panel**, toggleable side panel with file metadata.
 - **In-document search**, toolbar search field plus standard <kbd>⌘F</kbd> / <kbd>⌘G</kbd> / <kbd>⌘⇧G</kbd> for next/previous match.
 - **Open With**, switch to your real editor (VS Code, Cursor, Zed, Sublime, BBEdit, Nova, CotEditor, TextMate, MacVim, Xcode, TextEdit) without leaving the preview. The list filters to apps that actually declare an editor role for Markdown, and remembers your pick.
@@ -80,7 +81,7 @@ Build and run the `md-preview` scheme. Swift Package Manager will resolve [swift
 
 ## Project layout
 
-```
+```text
 md-preview/         Main app target (AppKit, WKWebView)
 quick-look/         Quick Look extension (.appex)
 scripts/            Build & release helpers
@@ -107,6 +108,7 @@ Pull requests are welcome. For larger changes, please open an issue first to dis
 4. Match the existing Swift style (no formatter is enforced; mirror nearby code).
 
 ## Acknowledgments
+
 - [swift-markdown](https://github.com/swiftlang/swift-markdown), Markdown parser (Apple, cmark-gfm-backed)
 - [Mermaid](https://mermaid.js.org/), Bundled diagram renderer for `mermaid` fenced code blocks
 - [KaTeX](https://katex.org/), Bundled math typesetter for inline `$…$`, display `$$…$$`, and ` ```math ` blocks

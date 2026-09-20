@@ -115,6 +115,11 @@ final class SidebarViewController: NSViewController {
         onModeChanged?(newMode)
     }
 
+    func focusProjectNavigator() {
+        loadViewIfNeeded()
+        projectNavigator.focus()
+    }
+
     private func refreshNavigatorIfNeeded() {
         if pendingFolderURL != loadedFolderURL {
             loadedFolderURL = pendingFolderURL
@@ -406,12 +411,26 @@ private final class FileNode {
     }
 }
 
+private final class NavigatorOutlineView: NSOutlineView {
+    var onNavigationKey: ((String) -> Void)?
+
+    override func keyDown(with event: NSEvent) {
+        let modifiers = event.modifierFlags.intersection([.command, .control, .option, .shift])
+        if modifiers.isEmpty, let key = event.characters,
+           ["h", "j", "k", "l"].contains(key) {
+            onNavigationKey?(key)
+            return
+        }
+        super.keyDown(with: event)
+    }
+}
+
 final class ProjectNavigatorView: NSView {
 
     var onSelectFile: ((URL) -> Void)?
 
     private let scrollView = NSScrollView()
-    private let outlineView = NSOutlineView()
+    private let outlineView = NavigatorOutlineView()
     private var rootNode: FileNode?
     // One watcher per loaded directory; kept in sync with which FileNodes
     // currently have a populated children cache.
@@ -444,7 +463,9 @@ final class ProjectNavigatorView: NSView {
         outlineView.target = self
         outlineView.action = #selector(rowClicked)
         outlineView.indentationPerLevel = 14
-        outlineView.refusesFirstResponder = true
+        outlineView.onNavigationKey = { [weak self] key in
+            self?.navigate(key)
+        }
 
         let contextMenu = NSMenu()
         contextMenu.delegate = self
@@ -464,6 +485,43 @@ final class ProjectNavigatorView: NSView {
             scrollView.trailingAnchor.constraint(equalTo: trailingAnchor),
             scrollView.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
+    }
+
+    func focus() {
+        window?.makeFirstResponder(outlineView)
+        if outlineView.selectedRow < 0 {
+            selectRow(0)
+        }
+    }
+
+    private func selectRow(_ row: Int) {
+        guard row >= 0, row < outlineView.numberOfRows else { return }
+        outlineView.selectRowIndexes(IndexSet(integer: row), byExtendingSelection: false)
+        outlineView.scrollRowToVisible(row)
+    }
+
+    private func navigate(_ key: String) {
+        let row = outlineView.selectedRow
+        if key == "j" || key == "k" {
+            let next = row < 0 ? 0 : row + (key == "j" ? 1 : -1)
+            selectRow(max(0, min(next, outlineView.numberOfRows - 1)))
+            return
+        }
+        guard let node = outlineView.item(atRow: row) as? FileNode else { return }
+        if key == "h" {
+            if outlineView.isItemExpanded(node) {
+                outlineView.collapseItem(node)
+            } else if let parent = outlineView.parent(forItem: node) {
+                selectRow(outlineView.row(forItem: parent))
+            }
+        } else if node.isDirectory {
+            outlineView.expandItem(node)
+            if let child = node.children().first {
+                selectRow(outlineView.row(forItem: child))
+            }
+        } else {
+            onSelectFile?(node.url)
+        }
     }
 
     func setRoot(_ url: URL?) {

@@ -215,6 +215,10 @@ final class ContentViewController: NSViewController {
         webView.printDocument(from: window)
     }
 
+    func focusPreview() {
+        view.window?.makeFirstResponder(webView.webView)
+    }
+
     func zoomIn() { webView.zoomIn() }
     func zoomOut() { webView.zoomOut() }
     func resetZoom() { webView.resetZoom() }

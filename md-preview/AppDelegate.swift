@@ -169,6 +169,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         syncSidebarViewMenuState()
     }
 
+    @objc private func toggleProjectNavigator(_ sender: Any?) {
+        activeDocumentWindowController?.toggleProjectNavigator(sender)
+        syncSidebarViewMenuState()
+    }
+
     @objc private func selectOutlineMode(_ sender: Any?) {
         activeDocumentWindowController?.selectOutlineMode(sender)
         syncSidebarViewMenuState()
@@ -204,6 +209,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         syncContentWidthMenuState()
         switch menuItem.action {
         case #selector(hideSidebarFromMenu(_:)),
+             #selector(toggleProjectNavigator(_:)),
              #selector(selectOutlineMode(_:)),
              #selector(selectFilesMode(_:)),
              #selector(performFindPanelAction(_:)),
@@ -799,7 +805,13 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         viewMenu.insertItem(files, at: insertIndex + 2)
         filesMenuItem = files
 
-        viewMenu.insertItem(.separator(), at: insertIndex + 3)
+        let toggle = makeSidebarViewMenuItem(title: "Toggle Project Navigator",
+                                             symbol: "folder",
+                                             keyEquivalent: "s",
+                                             action: #selector(toggleProjectNavigator(_:)))
+        toggle.keyEquivalentModifierMask = [.command]
+        viewMenu.insertItem(toggle, at: insertIndex + 3)
+        viewMenu.insertItem(.separator(), at: insertIndex + 4)
     }
 
     private func makeSidebarViewMenuItem(title: String,
