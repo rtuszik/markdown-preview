@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.0.33], 2026-09-21
+
+Markdown Preview adds keyboard controls for browsing project files and jumping through documents.
+
+### Added
+
+- **Project navigator keyboard controls.** With the navigator focused, `j` and `k` select the next or previous row, `l` enters a folder or opens a file, and `h` collapses a folder or selects its parent.
+- **Jump to the start or end of a document.** Press `gg` to jump to the top of the preview, or `G` (Shift+G) to jump to the bottom.
+
+### Changed
+
+- **⌘S toggles the project navigator.** Opening the navigator focuses it for keyboard navigation; hiding it returns focus to the preview. When the table of contents is visible, ⌘S switches to the navigator. The Save menu item no longer uses ⌘S.
+
 ## [0.0.32], 2026-07-23
 
 First release of the [rtuszik/markdown-preview](https://github.com/rtuszik/markdown-preview) fork. The app identity changed: **this version installs as a new app alongside any previous Markdown Preview install**, it does not update or replace it. Auto-updates are gone; new versions ship as DMGs on GitHub Releases.
